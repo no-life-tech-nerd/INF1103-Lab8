@@ -1,10 +1,11 @@
 from typing import override
 
 from Product import Product
+from Supplier import Supplier
 
 class DigitalProduct(Product):
-    def __init__(self, product_id: int, name: str, price: float, stock: int, download_size: int) -> None:
-        super().__init__(product_id=product_id, name=name, price=price, stock=stock)
+    def __init__(self, product_id: int, name: str, price: float, stock: int, download_size: int, supplier: Supplier) -> None:
+        super().__init__(product_id=product_id, name=name, price=price, stock=stock, supplier=supplier)
         self.__download_size = download_size
 
     def get_download_size(self) -> int:

@@ -2,15 +2,17 @@ from typing import override
 
 from Product import Product
 from CanBeShipped import CanBeShipped
+from Supplier import Supplier
 
 class PhysicalProduct(Product, CanBeShipped):
-    def __init__(self, product_id: int, name: str, price: float, stock: int, weight: int) -> None:
-        super().__init__(product_id=product_id, name=name, price=price, stock=stock)
+    def __init__(self, product_id: int, name: str, price: float, stock: int, weight: int, supplier: Supplier) -> None:
+        super().__init__(product_id=product_id, name=name, price=price, stock=stock, supplier=supplier)
         self.__weight = weight
 
     def get_weight(self) -> int:
         return int(self.__weight)
 
+    @override
     def calculate_shipping_cost(self) -> float:
         return (0.05*self.get_weight())+(0.05*self.get_price())
 

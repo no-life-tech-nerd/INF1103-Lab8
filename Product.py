@@ -1,11 +1,14 @@
 from abc import ABC, abstractmethod
+from Supplier import Supplier
 
 class Product(ABC):
-    def __init__(self, product_id: int, name: str, price: float, stock: int):
+    def __init__(self, product_id: int, name: str, price: float, stock: int, supplier: Supplier):
         self.__product_id = int(product_id)
         self.__name = str(name)
         self.__price = float(price)
         self.__stock = int(stock)
+        self.__supplier: Supplier = supplier
+        del self.__supplier
 
     def get_product_id(self) -> int:
         return self.__product_id
@@ -23,7 +26,7 @@ class Product(ABC):
         self.__stock = new_quantity
 
     def display_information(self) -> None:
-        print(f"ID: {self.__product_id}\nName: {self.__name}\nPrice: ${round(self.__price, 2):.2f}\nStock: {self.__stock}\nFulfilment: {self.get_fulfilment_info()}")
+        print(f"ID: {self.__product_id}\nName: {self.__name}\nPrice: ${round(self.__price, 2):.2f}\nStock: {self.__stock}\nFulfilment: {self.get_fulfilment_info()}\nSupplier: {self.__supplier.get_all()}")
 
     @abstractmethod
     def get_fulfilment_info(self) -> str:

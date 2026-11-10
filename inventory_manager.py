@@ -1,14 +1,19 @@
 import json
 from logging import warning
 from os import environ, getcwd
+from unicodedata import name
 from Product import Product
 from Inventory import Inventory
 from PhysicalProduct import PhysicalProduct
 from DigitalProduct import DigitalProduct
+from Supplier import Supplier
 
 errorCount = int(0)
 
 dataFile = f"{str(environ.get('DATA_PATH') or getcwd())}/inventory.json"
+
+physicalSupplier = Supplier(supplier_id=1, name="physical supplier", contact_email="physical@supplier.com")
+digitalSupplier = Supplier(supplier_id=2, name="digital supplier", contact_email="digital@supplier.com")
 
 def int_input(message: str) -> int:
     while True:
@@ -28,9 +33,9 @@ def load_inventory() -> list[Product]:
     for p in data:
         try:
             if p["type"] == "Physical":
-                l.append(PhysicalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), weight=int(p["weight"])))
+                l.append(PhysicalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), weight=int(p["weight"]), supplier=physicalSupplier))
             elif p["type"] == "Digital":
-                l.append(DigitalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), download_size=int(p["download_size"])))
+                l.append(DigitalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), download_size=int(p["download_size"]), supplier=digitalSupplier))
             else:
                 warning(f"The following product data could not be loaded! Data: {str(p)}")
         except ValueError:
@@ -95,10 +100,10 @@ while True:
             newType = int_input("Type 1 for physical product, or 2 for digital product: ")
             if newType == 1:
                 newWeight = int_input("Enter physical weight: ")
-                inventory.add_product(PhysicalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, weight = newWeight))
+                inventory.add_product(PhysicalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, weight = newWeight, supplier = physicalSupplier))
             elif newType == 2:
                 newDownloadSize = int_input("Enter download size: ")
-                inventory.add_product(DigitalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, download_size = newDownloadSize))
+                inventory.add_product(DigitalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, download_size = newDownloadSize, supplier = digitalSupplier))
 
     elif option == "3":
         print("Update Stock")

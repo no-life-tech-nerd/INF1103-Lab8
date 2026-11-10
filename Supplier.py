@@ -4,7 +4,10 @@ class Supplier:
         self.__name = str(name)
         self.__contact_email = str(contact_email)
 
+    def get_all(self) -> str:
+        return f"Supplier ID: {self.__supplier_id}\nSupplier Name: {self.__name}\nSupplier Contact Email: {self.__contact_email}"
+
     def display_information(self) -> None:
-        print(f"Supplier Info\n=============\nID: {self.__supplier_id}\nName: {self.__name}\nContact Email: {self.__contact_email}")
+        print(f"Supplier Info\n=============\n{self.get_all()}")
         return
 
