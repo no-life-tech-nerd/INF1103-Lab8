@@ -8,7 +8,6 @@ class Product(ABC):
         self.__price = float(price)
         self.__stock = int(stock)
         self.__supplier: Supplier = supplier
-        del self.__supplier
 
     def get_product_id(self) -> int:
         return self.__product_id

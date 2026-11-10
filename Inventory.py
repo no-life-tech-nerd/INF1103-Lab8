@@ -37,25 +37,40 @@ class Inventory:
             print("\nUnknown error adding new product to inventory, try again!\n")
             return
 
-    def update_product_stock(self, newProdId: int, newStock: int) -> None:
-        for p in self.__products:
-            if newProdId == p.get_product_id():
-                print("\nProduct found:\n")
-                try:
-                    p.display_information()
-                    p.update_stock(newStock)
-                    print("\nNew Product Info:\n")
-                    p.display_information()
-                    if p.get_stock() > 500:
-                        warning(f"There are more than 500 quantity of item {p.get_name()} in inventory!")
-                    return
-                except:
-                    warning("Error while updating product's stock!")
-        warning("Product not found.")
-
-    def search_inventory(self, prodId: int) -> None:
+    def find_product(self, prodId: int) -> Product | None:
         for p in self.__products:
             if prodId == p.get_product_id():
+                return p
+        warning(f"Product ID {prodId} not found.")
+        return
+
+    def update_product_stock(self, newProdId: int, newStock: int) -> None:
+        p = self.find_product(newProdId)
+        if p is not None:
+            print("\nProduct found:\n")
+            try:
                 p.display_information()
+                p.update_stock(newStock)
+                print("\nNew Product Info:\n")
+                p.display_information()
+                if p.get_stock() > 500:
+                    warning(f"There are more than 500 quantity of item {p.get_name()} in inventory!")
                 return
-        warning("Product not found.")
+            except:
+                warning("Error while updating product's stock!")
+
+    def search_inventory(self, prodId: int) -> None:
+        p = self.find_product(prodId)
+        if p is not None:
+            p.display_information()
+        return
+
+    def remove_product(self, prodId: int) -> None:
+        for p in self.__products:
+            if prodId == p.get_product_id():
+                try:
+                    self.__products.remove(p)
+                except:
+                    warning("Error while removing product!")
+            else:
+                warning("No product matching product ID found to delete!")

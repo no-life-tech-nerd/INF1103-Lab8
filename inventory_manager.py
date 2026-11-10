@@ -67,6 +67,7 @@ def save_inventory(i: Inventory) -> None:
         json.dump(products, file)
 
 inventory = Inventory(load_inventory())
+del digitalSupplier
 
 while True:
     print("\n========================================")
@@ -77,8 +78,9 @@ while True:
     print("2. Add Product")
     print("3. Update Stock")
     print("4. Search Product")
-    print("5. Save Inventory")
-    print("6. Exit")
+    print("5. Delete Product")
+    print("6. Save Inventory")
+    print("7. Exit")
     print("----------------------------")
 
     option = input("Enter option: ")
@@ -119,10 +121,17 @@ while True:
         inventory.search_inventory(prodId)
 
     elif option == "5":
+        print("Delete Product")
+        print("--------------")
+        inventory.display_all()
+        prodId = int_input("Enter product ID: ")
+        inventory.remove_product(prodId)
+
+    elif option == "6":
         print("\nSaving inventory...")
         save_inventory(inventory)
 
-    elif option == "6":
+    elif option == "7":
         print("\nSaving inventory before exit...")
         save_inventory(inventory)
         print("Thank you for using Inventory Management System.")
