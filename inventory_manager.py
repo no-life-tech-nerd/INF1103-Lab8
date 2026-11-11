@@ -67,7 +67,6 @@ def save_inventory(i: Inventory) -> None:
         json.dump(products, file)
 
 inventory = Inventory(load_inventory())
-del digitalSupplier
 
 while True:
     print("\n========================================")
