@@ -59,12 +59,17 @@ classDiagram
         - order_lines: list~OrderLine~
         + add_order_line(product: Product, quantity: int) None
         + calculate_total() float
+        + display_information() None
+        + get_order_lines() tuple~OrderLine, ...~
     }
 
     class OrderLine {
         - product: Product
         - quantity: int
         + calculate_subtotal() float
+        + display_information() None
+        + get_product() Product
+        + get_quantity() int
     }
 
     Product <|-- PhysicalProduct
