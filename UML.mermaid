@@ -1,49 +1,78 @@
 classDiagram
     class Product {
         <<abstract>>
-        - product_id : int
-        - name : str
-        - price : float
-        - stock : int
+        - product_id: int
+        - name: str
+        - price: float
+        - stock: int
+        - supplier: Supplier
         + get_product_id() int
         + get_name() str
         + get_price() float
         + get_stock() int
-        + update_stock(new_quantity : int) void
-        + display_information() void
+        + update_stock(new_quantity: int) None
+        + display_information() None
         + get_fulfilment_info() str
     }
 
     class PhysicalProduct {
-        - weight : int
+        - weight: int
         + get_weight() int
-        + display_information() void
+        + display_information() None
         + get_fulfilment_info() str
         + calculate_shipping_cost() float
     }
 
     class DigitalProduct {
-        - download_size : int
+        - download_size: int
         + get_download_size() int
-        + display_information() void
+        + display_information() None
         + get_fulfilment_info() str
     }
 
     class CanBeShipped {
-        <<abstract>>
+        <<interface>>
         + calculate_shipping_cost() float
     }
 
-    class Inventory {
-        - products : list~Product~
-        + get_products() list~Product~
-        + add_product(prod : Product) void
-        + update_product_stock(product_id : int, new_stock : int) void
-        + search_inventory(product_id : int) void
-        + display_all() void
+    class Supplier {
+        - supplier_id: int
+        - name: str
+        - contact_email: str
+        + get_all() str
+        + display_information() None
     }
 
-    Product <|-- PhysicalProduct : inherits
-    Product <|-- DigitalProduct : inherits
-    PhysicalProduct ..|> CanBeShipped : implements
-    Inventory --> "0..*" Product : manages
+    class Inventory {
+        - products: list~Product~
+        + get_products() list~Product~
+        + add_product(prod: Product) None
+        + remove_product(prodId: int) None
+        + find_product(prodId: int) Product|None
+        + update_product_stock(newProdId: int, newStock: int) None
+        + search_inventory(prodId: int) None
+        + display_all() None
+    }
+
+    class Order {
+        - order_id: int
+        - order_lines: list~OrderLine~
+        + add_order_line(product: Product, quantity: int) None
+        + calculate_total() float
+    }
+
+    class OrderLine {
+        - product: Product
+        - quantity: int
+        + calculate_subtotal() float
+    }
+
+    Product <|-- PhysicalProduct
+    Product <|-- DigitalProduct
+    CanBeShipped <|.. PhysicalProduct
+
+    Supplier "1" -- "0..*" Product
+    Inventory "0..1" o-- "0..*" Product
+    Order "1" *-- "0..*" OrderLine
+    OrderLine "0..*" -- "1" Product
+    Product <.. Order
