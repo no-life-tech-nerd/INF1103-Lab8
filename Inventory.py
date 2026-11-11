@@ -74,3 +74,7 @@ class Inventory:
                     warning("Error while removing product!")
                 return
         warning("No product matching product ID found to delete!")
+
+    def show_product_details(self, product: Product) -> None:
+        product.display_information()
+        print(product.get_fulfilment_info())
