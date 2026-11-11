@@ -15,3 +15,10 @@ class Order:
         for i in self.__order_lines:
             total += i.calculate_subtotal()
         return total
+
+    def display_information(self) -> None:
+        for i in self.__order_lines:
+            i.display_information()
+
+    def get_order_lines(self) -> tuple[OrderLine, ...]:
+        return tuple(self.__order_lines)
