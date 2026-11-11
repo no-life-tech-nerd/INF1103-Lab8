@@ -72,5 +72,5 @@ class Inventory:
                     self.__products.remove(p)
                 except:
                     warning("Error while removing product!")
-            else:
-                warning("No product matching product ID found to delete!")
+                return
+        warning("No product matching product ID found to delete!")

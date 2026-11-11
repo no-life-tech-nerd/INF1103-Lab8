@@ -10,7 +10,7 @@ class OrderLine:
         return self.__product.get_price() * self.__quantity
 
     def display_information(self) -> None:
-        print(f"OrderLine Info\nProduct: {str(self.__product)}\nQuantity: {str(self.__quantity)}")
+        print(f"OrderLine Info\nProduct: {self.__product.get_name()}\nQuantity: {self.__quantity}")
 
     def get_product(self) -> Product:
         return self.__product
