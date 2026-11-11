@@ -2,7 +2,7 @@ from Product import Product
 from logging import warning
 
 class Inventory:
-    def __init__(self, products: list[Product]):
+    def __init__(self, products: list[Product]) -> None:
         self.__products: list[Product] = products
 
     def get_products(self) -> list[Product]:
