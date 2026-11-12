@@ -52,9 +52,9 @@ def load_inventory() -> list[Product]:
             elif p["type"] == "Digital":
                 l.append(DigitalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), download_size=int(p["download_size"]), supplier=supplier))
             else:
-                warning(f"The following product data could not be loaded! Data: {str(p)}")
-        except (KeyError, TypeError, ValueError):
-            warning(f"\nError while loading product data, check if the fields and types are valid: {str(p)}")
+                raise ValueError("Unknown product type")
+        except (KeyError, TypeError, ValueError) as error:
+            raise ValueError("Unable to load inventory: invalid product data; the file was not changed") from error
     return l
 
 def save_inventory(i: Inventory) -> None:
