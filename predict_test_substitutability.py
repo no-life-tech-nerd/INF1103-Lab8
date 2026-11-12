@@ -30,7 +30,7 @@ def main() -> None:
         if inventory.find_product(product.get_product_id()) is not product:
             raise AssertionError("Inventory did not retain the product")
 
-    # Inventory.display_all catches errors, so verify that both products appeared.
+    # Verify that display_all renders both products' details.
     output = StringIO()
     with redirect_stdout(output):
         inventory.display_all()
