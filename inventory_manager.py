@@ -12,9 +12,6 @@ errorCount = int(0)
 
 dataFile = f"{str(environ.get('DATA_PATH') or getcwd())}/inventory.json"
 
-physicalSupplier = Supplier(supplier_id=1, name="physical supplier", contact_email="physical@supplier.com")
-digitalSupplier = Supplier(supplier_id=2, name="digital supplier", contact_email="digital@supplier.com")
-
 def int_input(message: str) -> int:
     while True:
         try:
@@ -29,40 +26,62 @@ def load_inventory() -> list[Product]:
     except FileNotFoundError:
         print("File not found, using empty inventory.")
         return []
+
     l = []
+    suppliers = {}
     for p in data:
         try:
+            if "supplier" in p:
+                supplier_data = p["supplier"]
+                supplier_id = int(supplier_data["supplier_id"])
+                supplier_name = str(supplier_data["name"])
+                supplier_email = str(supplier_data["contact_email"])
+                supplier_key = (supplier_id, supplier_name, supplier_email)
+                if supplier_key not in suppliers:
+                    suppliers[supplier_key] = Supplier(
+                        supplier_id=supplier_id,
+                        name=supplier_name,
+                        contact_email=supplier_email,
+                    )
+                supplier = suppliers[supplier_key]
+            else:
+                supplier = Supplier(0, "", "")
+
             if p["type"] == "Physical":
-                l.append(PhysicalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), weight=int(p["weight"]), supplier=physicalSupplier))
+                l.append(PhysicalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), weight=int(p["weight"]), supplier=supplier))
             elif p["type"] == "Digital":
-                l.append(DigitalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), download_size=int(p["download_size"]), supplier=digitalSupplier))
+                l.append(DigitalProduct(product_id=int(p["product_id"]), name=str(p["name"]), price=float(p["price"]), stock=int(p["stock"]), download_size=int(p["download_size"]), supplier=supplier))
             else:
                 warning(f"The following product data could not be loaded! Data: {str(p)}")
-        except ValueError:
-            warning(f"\nError while loading data for product ID {p["product_id"]}, check if the types are valid.")
+        except (KeyError, TypeError, ValueError):
+            warning(f"\nError while loading product data, check if the fields and types are valid: {str(p)}")
     return l
 
 def save_inventory(i: Inventory) -> None:
     products = []
-    try:
-        for p in i.get_products():
-            product_data = {
-                "product_id": p.get_product_id(),
-                "name": p.get_name(),
-                "price": p.get_price(),
-                "stock": p.get_stock()
-            }
-            if isinstance(p, PhysicalProduct):
-                product_data["type"] = "Physical"
-                product_data["weight"] = p.get_weight()
-            elif isinstance(p, DigitalProduct):
-                product_data["type"] = "Digital"
-                product_data["download_size"] = p.get_download_size()
-            else:
-                warning(f"The following product could not be saved! Data: {str(p)}")
-            products.append(product_data)
-    except:
-        warning("\nError while transforming inventory data for JSON save!\n")
+    for p in i.get_products():
+        product_data = {
+            "product_id": p.get_product_id(),
+            "name": p.get_name(),
+            "price": p.get_price(),
+            "stock": p.get_stock(),
+            "supplier": {
+                "supplier_id": p.get_supplier().get_supplier_id(),
+                "name": p.get_supplier().get_name(),
+                "contact_email": p.get_supplier().get_contact_email(),
+            },
+        }
+        if isinstance(p, PhysicalProduct):
+            product_data["type"] = "Physical"
+            product_data["weight"] = p.get_weight()
+        elif isinstance(p, DigitalProduct):
+            product_data["type"] = "Digital"
+            product_data["download_size"] = p.get_download_size()
+        else:
+            warning(f"The following product could not be saved! Data: {str(p)}")
+            raise TypeError(f"Unsupported product type: {type(p).__name__}")
+        products.append(product_data)
+
     with open(dataFile, 'w') as file:
         json.dump(products, file)
 
@@ -101,10 +120,10 @@ while True:
             newType = int_input("Type 1 for physical product, or 2 for digital product: ")
             if newType == 1:
                 newWeight = int_input("Enter physical weight: ")
-                inventory.add_product(PhysicalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, weight = newWeight, supplier = physicalSupplier))
+                inventory.add_product(PhysicalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, weight = newWeight, supplier = Supplier(0, "", "")))
             elif newType == 2:
                 newDownloadSize = int_input("Enter download size: ")
-                inventory.add_product(DigitalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, download_size = newDownloadSize, supplier = digitalSupplier))
+                inventory.add_product(DigitalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, download_size = newDownloadSize, supplier = Supplier(0, "", "")))
 
     elif option == "3":
         print("Update Stock")

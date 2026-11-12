@@ -10,6 +10,7 @@ classDiagram
         + get_name() str
         + get_price() float
         + get_stock() int
+        + get_supplier() Supplier
         + update_stock(new_quantity: int) None
         + display_information() None
         + get_fulfilment_info() str
@@ -39,6 +40,9 @@ classDiagram
         - supplier_id: int
         - name: str
         - contact_email: str
+        + get_supplier_id() int
+        + get_name() str
+        + get_contact_email() str
         + get_all() str
         + display_information() None
     }

@@ -4,6 +4,15 @@ class Supplier:
         self.__name = str(name)
         self.__contact_email = str(contact_email)
 
+    def get_supplier_id(self) -> int:
+        return self.__supplier_id
+
+    def get_name(self) -> str:
+        return self.__name
+
+    def get_contact_email(self) -> str:
+        return self.__contact_email
+
     def get_all(self) -> str:
         return f"Supplier ID: {self.__supplier_id}\nSupplier Name: {self.__name}\nSupplier Contact Email: {self.__contact_email}"
 
