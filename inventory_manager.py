@@ -11,6 +11,7 @@ from Supplier import Supplier
 errorCount = int(0)
 
 dataFile = f"{str(environ.get('DATA_PATH') or getcwd())}/inventory.json"
+supplierFile = f"{str(environ.get('DATA_PATH') or getcwd())}/suppliers.json"
 
 def int_input(message: str) -> int:
     while True:
@@ -85,7 +86,56 @@ def save_inventory(i: Inventory) -> None:
     with open(dataFile, 'w') as file:
         json.dump(products, file)
 
+def load_suppliers(products: list[Product]) -> list[Supplier]:
+    try:
+        with open(supplierFile, 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        data = []
+
+    suppliers = []
+    try:
+        for s in data:
+            suppliers.append(Supplier(int(s["supplier_id"]), str(s["name"]), str(s["contact_email"])))
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("Unable to load suppliers: invalid supplier data; the file was not changed") from error
+
+    for p in products:
+        supplier = p.get_supplier()
+        if (supplier.get_name() or supplier.get_contact_email()) and not any(
+            s.get_supplier_id() == supplier.get_supplier_id() for s in suppliers
+        ):
+            suppliers.append(supplier)
+    return suppliers
+
+def save_suppliers(suppliers: list[Supplier]) -> None:
+    data = []
+    for s in suppliers:
+        data.append({
+            "supplier_id": s.get_supplier_id(),
+            "name": s.get_name(),
+            "contact_email": s.get_contact_email(),
+        })
+    with open(supplierFile, 'w') as file:
+        json.dump(data, file)
+
+def select_supplier(suppliers: list[Supplier]) -> Supplier | None:
+    if not suppliers:
+        warning("No suppliers available. Add a supplier before adding a product.")
+        return None
+
+    print("Select a supplier:")
+    for s in suppliers:
+        print(f"{s.get_supplier_id()}. {s.get_name()} ({s.get_contact_email()})")
+    while True:
+        supplierId = int_input("Enter supplier ID: ")
+        for s in suppliers:
+            if s.get_supplier_id() == supplierId:
+                return s
+        warning("Supplier ID not found, try again!")
+
 inventory = Inventory(load_inventory())
+suppliers = load_suppliers(inventory.get_products())
 
 while True:
     print("\n========================================")
@@ -98,7 +148,8 @@ while True:
     print("4. Search Product")
     print("5. Delete Product")
     print("6. Save Inventory")
-    print("7. Exit")
+    print("7. Add Supplier")
+    print("8. Exit")
     print("----------------------------")
 
     option = input("Enter option: ")
@@ -120,10 +171,16 @@ while True:
             newType = int_input("Type 1 for physical product, or 2 for digital product: ")
             if newType == 1:
                 newWeight = int_input("Enter physical weight: ")
-                inventory.add_product(PhysicalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, weight = newWeight, supplier = Supplier(0, "", "")))
+                supplier = select_supplier(suppliers)
+                if supplier is None:
+                    continue
+                inventory.add_product(PhysicalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, weight = newWeight, supplier = supplier))
             elif newType == 2:
                 newDownloadSize = int_input("Enter download size: ")
-                inventory.add_product(DigitalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, download_size = newDownloadSize, supplier = Supplier(0, "", "")))
+                supplier = select_supplier(suppliers)
+                if supplier is None:
+                    continue
+                inventory.add_product(DigitalProduct(product_id = newProdId, name = newName, price = newPrice, stock = newStock, download_size = newDownloadSize, supplier = supplier))
 
     elif option == "3":
         print("Update Stock")
@@ -148,13 +205,27 @@ while True:
     elif option == "6":
         print("\nSaving inventory...")
         save_inventory(inventory)
+        save_suppliers(suppliers)
 
-    elif option == "7":
+    elif option == "8":
         print("\nSaving inventory before exit...")
         save_inventory(inventory)
+        save_suppliers(suppliers)
         print("Thank you for using Inventory Management System.")
         print("Program terminated.")
         break
+
+    elif option == "7":
+        print("Add New Supplier")
+        print("----------------")
+        supplierId = int_input("Enter supplier ID: ")
+        if any(s.get_supplier_id() == supplierId for s in suppliers):
+            warning("This supplier ID already exists, try again!")
+            continue
+        supplierName = input("Enter supplier name: ")
+        supplierEmail = input("Enter supplier contact email: ")
+        suppliers.append(Supplier(supplierId, supplierName, supplierEmail))
+        print("\nSupplier added successfully!\n")
 
     else:
         print("Invalid option. Please try again.")
