@@ -1,3 +1,15 @@
+commit 1df561b374cb8e012b126b7b7b611b7d3be9f0b7
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Fri Nov 13 12:08:21 2026 +0800
+
+    chore: submission requirements
+
+commit 1b77b030deafdaebd4c2b495c2c13702168a0192
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Fri Nov 13 09:52:18 2026 +0800
+
+    chore: submission requirements
+
 commit fda4e84eb9f1688da0d9fc5ff0e837394eaf17a8
 Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
 Date:   Fri Nov 13 09:51:58 2026 +0800
