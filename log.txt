@@ -1,0 +1,149 @@
+commit fda4e84eb9f1688da0d9fc5ff0e837394eaf17a8
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Fri Nov 13 09:51:58 2026 +0800
+
+    feat(docker): pin patch version
+
+commit 5d1d11a71471e62e188b6a15eea78a262ab20eb0
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Fri Nov 13 09:51:26 2026 +0800
+
+    feat: add supplier management to CLI
+
+commit 9248f15d800461a7367332633aaf3e9142cd9abe
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 19:13:05 2026 +0800
+
+    feat(tests): convert to unittest
+
+commit 4b14c36c4a2af3af9a0f73548ebac8a41b40f83b
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 18:37:59 2026 +0800
+
+    fix(predict_test_*): improve verification in test scripts
+
+commit 46b5cb96699caa5e1dff93fc081f754ce4e650b4
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 18:37:23 2026 +0800
+
+    fix(main): improve save safety with improper supplier
+
+commit d438092dd16e2ed2e1664b7a7ea16d34c0c84515
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 18:30:12 2026 +0800
+
+    fix(inventory): preserve supplier associations
+
+commit b3dc858e280d9ac5e1501bdf2496def850237421
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 18:30:12 2026 +0800
+
+    fix(inventory): propagate display errors
+
+commit d7c0bb78a1b759d423b2901d563db4ef39e05792
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 18:15:09 2026 +0800
+
+    docs(PredictFirst): improved upon answers
+
+commit 286fc85c1e9fe41c7c585da58b5815795419a8aa
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 18:07:41 2026 +0800
+
+    feat: add answers to Predict First questions and other questions
+
+commit 22293569dd7507753b8e4e4f18fc053cd7c6206e
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 18:07:16 2026 +0800
+
+    feat(UML): add show_product_details()
+
+commit ffd11c19c9c114fcb548d2df32f55db237d7ec92
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Thu Nov 12 18:06:08 2026 +0800
+
+    feat(inventory): test polymorphism
+
+commit d0250da2346e692fa3ec72f7948b355f907a9ca5
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 17:35:19 2026 +0800
+
+    feat(inventory): test substitutability
+
+commit a45c8c9fc67a9646923dbb27cba8dde2a5c94f1e
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 17:28:25 2026 +0800
+
+    feat(UML): update UML diagram as per section 5.3 for new order/orderline getters
+
+commit 2318561470fbe8936a2ac5d7ac6a7ab5628bf5dc
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 17:27:21 2026 +0800
+
+    chore: cleanup as per 5.2
+
+commit 0a89d405f05e1015b58dc6a909abcf0f779d5c66
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 17:21:27 2026 +0800
+
+    chore: cleanup as per 5.2
+
+commit 36ed7a02c37e72146c8e654301446ce722a5fb23
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 17:10:58 2026 +0800
+
+    feat(UML): update UML diagram at section 5.3
+
+commit a5135cb50776442487bc658123140bc8b60b8cc0
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 17:10:14 2026 +0800
+
+    feat: add prediction test code for composition
+
+commit 317040cd5c15970ae9e5d5dad23a3b0b48957b46
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 15:23:25 2026 +0800
+
+    feat(Order): added Order & OrderLine class
+
+commit fb35b60eafe36476739ed7758fe9456fd70fd5a7
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 15:22:59 2026 +0800
+
+    feat: add prediction test code for association & aggregation
+
+commit 1c22a23056c84b96b4c68f4cd5a6a3f7f18b8269
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 15:05:28 2026 +0800
+
+    feat: add mise
+
+commit d1d930d7ea0a57e0ec1a815f1c2b367faf2dfa4c
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 15:05:17 2026 +0800
+
+    fix(main): disable del supplier
+
+commit bdd667f7df3b9df41c9207529baede7fbb5b5c97
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 05:31:39 2026 +0800
+
+    feat(inventory): add new functions
+
+commit ef4fb6992b3dedf3b4d9fe570f07be86d1cff749
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Wed Nov 11 04:37:43 2026 +0800
+
+    feat(supplier): wire up to Product class, add to manager, test removal of supplier
+
+commit af8642757dcce35f8319a90a6bfc249479725d50
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Tue Nov 10 22:08:28 2026 +0800
+
+    feat(supplier): add Supplier class
+
+commit adc6a0cdfc8c7cee309ec17a38d2a5c922851b13
+Author: no-life-tech-nerd <2604171@sit.singaporetech.edu.sg>
+Date:   Tue Nov 10 03:49:28 2026 +0800
+
+    feat: initial commit of structure + lab 7 work
